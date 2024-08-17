@@ -11,6 +11,7 @@ export function MainHero() {
           src="/template.webp"
           alt="Hero Background"
           fill
+          quality={100}
           priority // Load this image with high priority
           className="object-cover" // Ensures the image covers the section without distortion
         />

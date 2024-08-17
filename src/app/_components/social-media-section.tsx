@@ -7,8 +7,9 @@ export function SocialMediaSection() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="/template.webp"
+          src="/bg_socials.png"
           alt="Hero Background"
+          quality={100}
           fill
           priority // Load this image with high priority
           className="object-cover" // Ensures the image covers the section without distortion

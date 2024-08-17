@@ -6,19 +6,19 @@ export function UspSection() {
       title: "Dibuat dari Bahan Makanan Segar",
       description:
         "Menu makanan sehat yang lezat dan mengenyangkan, serta menggunakan bahan makanan yang segar dan terjamin kebersihannya.",
-      image: "/template.webp",
+      image: "/bg_about_1.png",
     },
     {
       title: "Menu yang Dipersonalisasi",
       description:
         "Menu makanan yang dipersonalisasi sesuai dengan kebutuhan tubuhmu.",
-      image: "/template.webp",
+      image: "/bg_about_2.png",
     },
     {
       title: "Dilengkapi dengan Ahli Gizi",
       description:
         "Kamu dapat melakukan konsultasi gizi untuk mendapatkan rekomendasi menu yang sesuai dengan kebutuhan gizimu.",
-      image: "/template.webp",
+      image: "/bg_about_3.png",
     },
   ];
 
@@ -50,7 +50,7 @@ export function UspSection() {
                 objectFit="cover" // Ensure the image covers the card
                 className="absolute inset-0"
               />
-              <div className="absolute inset-0 bg-black opacity-55"></div>
+              <div className="absolute inset-0 bg-black opacity-30"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
                 <h3 className="px-2 text-3xl font-bold">{card.title}</h3>
                 <p className="text-md">{card.description}</p>

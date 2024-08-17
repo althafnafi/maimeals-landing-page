@@ -16,6 +16,7 @@ export function FloatingContactBtn() {
           alt="WhatsApp Logo"
           width={40} // Set the desired width
           height={40} // Set the desired height
+          quality={100}
           className="absolute right-0 top-1/2 -translate-y-1/2 transform" // Positioning the image
         />
       </div>
