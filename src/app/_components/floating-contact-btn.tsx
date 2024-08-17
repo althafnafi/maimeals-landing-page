@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-// import { cookies } from "next/headers";
 import { usePostHog } from "posthog-js/react";
 import Cookies from "js-cookie";
 

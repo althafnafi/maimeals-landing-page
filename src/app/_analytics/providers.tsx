@@ -2,6 +2,8 @@
 "use client";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 if (typeof window !== "undefined") {
   // TODO: Edit to to use T3 env vars
@@ -13,9 +15,23 @@ if (typeof window !== "undefined") {
 }
 
 export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
-  return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
+  return (
+    <PostHogProvider client={posthog}>
+      <PostHogAuthWrapper>{children}</PostHogAuthWrapper>
+    </PostHogProvider>
+  );
 }
 
-// function PostHogAuthWrapper({ children }: { children: React.ReactNode }) {
-//   const sessionId =
-// }
+function PostHogAuthWrapper({ children }: { children: React.ReactNode }) {
+  const sessionId = Cookies.get("sessionId");
+
+  useEffect(() => {
+    if (sessionId) {
+      posthog.identify(sessionId, { sessionId });
+    } else {
+      posthog.reset();
+    }
+  }, [sessionId]);
+
+  return children;
+}
