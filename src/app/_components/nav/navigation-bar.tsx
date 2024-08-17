@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import Cookies from "js-cookie"; // Import js-cookie
+import { cookies } from "next/headers";
 
 export function NavigationBar() {
   return (
@@ -23,11 +25,15 @@ export function NavigationBar() {
             { href: "/#about", text: "ABOUT" },
             { href: "/#product", text: "PRODUCT" },
             { href: "/#contact", text: "CONTACT US" },
+            {
+              href: `/chat/${cookies().get("sessionId")?.value ? cookies().get("sessionId")?.value : ""}`,
+              text: "CHAT",
+            },
           ].map((link, index) => (
             <Link
-              key={link.href}
+              key={link.text}
               href={link.href}
-              className={`group relative flex h-full items-center px-8 text-accent-red hover:text-gray-600 lg:px-10 ${index < 3 ? "border-r-2 border-accent-red" : ""} `}
+              className={`group relative flex h-full items-center px-8 text-accent-red hover:text-gray-600 lg:px-10 ${index < 4 ? "border-r-2 border-accent-red" : ""} `}
             >
               {link.text}
               <span className="absolute bottom-0 left-0 h-1 w-full scale-x-0 transform bg-accent-red transition-transform duration-200 group-hover:scale-x-100"></span>

@@ -5,7 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Define the validation schema using Zod
-const CalculatorSchema = z.object({
+export const CalculatorSchema = z.object({
   age: z.coerce
     .number()
     .min(1, "Age must be a positive number")
@@ -17,7 +17,7 @@ const CalculatorSchema = z.object({
   }),
 });
 
-type CalculatorSchemaType = z.infer<typeof CalculatorSchema>;
+export type CalculatorSchemaType = z.infer<typeof CalculatorSchema>;
 
 export function CalorieCalculator() {
   const [results, setResults] = useState<{
@@ -200,6 +200,9 @@ export function CalorieCalculator() {
                 </span>
               </p>
             </div>
+            <span className="bg-white font-bold text-accent-red">
+              Chat dengan bot
+            </span>
             <p className="mt-4 text-lg text-gray-100 underline">
               Bingung mau makan apa? maimeals.com akan merekomendasikan meal
               plan yang dapat langsung kamu order.
