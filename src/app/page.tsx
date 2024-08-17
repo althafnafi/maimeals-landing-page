@@ -1,4 +1,3 @@
-import { InitialForm } from "./_components/initial-form";
 import { MainHero } from "./_components/main-hero";
 import { CalorieCalculator } from "./_components/calorie-calculator";
 import { UspSection } from "./_components/usp-section";

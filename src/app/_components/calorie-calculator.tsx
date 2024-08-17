@@ -37,15 +37,9 @@ export function CalorieCalculator() {
     resolver: zodResolver(CalculatorSchema),
   });
 
-  const onSubmit: SubmitHandler<CalculatorSchemaType> = (data: any) => {
-    let { age, weight, height, gender } = data;
+  const onSubmit: SubmitHandler<CalculatorSchemaType> = (data) => {
+    const { age, weight, height, gender } = data;
     console.log(age, weight, height, gender);
-
-    // Convert input values to numbers
-    age = parseInt(age);
-    weight = parseInt(weight);
-    height = parseInt(height);
-
     // Simple BMI calculation
     const heightInMeters = height / 100;
     const bmi = weight / (heightInMeters * heightInMeters);

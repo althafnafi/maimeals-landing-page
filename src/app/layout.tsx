@@ -15,7 +15,6 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "@/trpc/react";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 import { NavigationBar } from "./_components/nav/navigation-bar";
 
 const fontSans = FontSans({
