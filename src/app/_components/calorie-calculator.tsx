@@ -1,25 +1,54 @@
 "use client";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// Define the validation schema using Zod
+const CalculatorSchema = z.object({
+  age: z.coerce
+    .number()
+    .min(1, "Age must be a positive number")
+    .max(120, "Age must be less than 120"),
+  weight: z.coerce.number().min(1, "Weight must be a positive number"),
+  height: z.coerce.number().min(1, "Height must be a positive number"),
+  gender: z.enum(["male", "female"], {
+    errorMap: () => ({ message: "Gender is required" }),
+  }),
+});
+
+type CalculatorSchemaType = z.infer<typeof CalculatorSchema>;
 
 export function CalorieCalculator() {
   const [results, setResults] = useState<{
-    bmi: string;
-    calorieNeeds: string;
-    idealWeight: string;
+    bmi: number;
+    calorieNeeds: number;
+    idealWeight: number;
     bmiCategory: string;
   } | null>(null);
   const [showResults, setShowResults] = useState(false);
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    const age = event.target.age.value;
-    const weight = event.target.weight.value;
-    const height = event.target.height.value;
-    const gender = event.target.gender.value;
+  // Initialize useForm with Zod resolver
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CalculatorSchemaType>({
+    resolver: zodResolver(CalculatorSchema),
+  });
+
+  const onSubmit: SubmitHandler<CalculatorSchemaType> = (data: any) => {
+    let { age, weight, height, gender } = data;
+    console.log(age, weight, height, gender);
+
+    // Convert input values to numbers
+    age = parseInt(age);
+    weight = parseInt(weight);
+    height = parseInt(height);
 
     // Simple BMI calculation
     const heightInMeters = height / 100;
-    const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+    const bmi = weight / (heightInMeters * heightInMeters);
 
     // Calculate daily calorie needs (using Mifflin-St Jeor Equation)
     let bmr;
@@ -28,19 +57,17 @@ export function CalorieCalculator() {
     } else {
       bmr = 10 * weight + 6.25 * height - 5 * age - 161;
     }
-    const calorieNeeds = (bmr * 1.2).toFixed(0); // Assuming sedentary activity level
+    const calorieNeeds = bmr * 1.2; // Assuming sedentary activity level
 
     // Calculate ideal weight (using BMI of 22 as the target for healthy weight)
     const idealBMI = 22;
-    const idealWeight = (idealBMI * (heightInMeters * heightInMeters)).toFixed(
-      1,
-    );
+    const idealWeight = idealBMI * (heightInMeters * heightInMeters);
 
     // Determine BMI category
     let bmiCategory;
-    if (parseFloat(bmi) < 18.5) {
+    if (bmi < 18.5) {
       bmiCategory = "kurus tingkat ringan";
-    } else if (parseFloat(bmi) < 24.9) {
+    } else if (bmi < 24.9) {
       bmiCategory = "berat badan ideal";
     } else {
       bmiCategory = "kelebihan berat badan";
@@ -48,6 +75,7 @@ export function CalorieCalculator() {
 
     // Set results
     setResults({ bmi, calorieNeeds, idealWeight, bmiCategory });
+    console.log(bmi, calorieNeeds, idealWeight, bmiCategory);
     setShowResults(true);
   };
 
@@ -65,7 +93,7 @@ export function CalorieCalculator() {
           className="mx-auto rounded-lg bg-white p-8 shadow-md"
           style={{ width: "70vw", maxWidth: "600px" }}
         >
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="age" className="font-medium text-gray-500">
@@ -75,10 +103,13 @@ export function CalorieCalculator() {
                   type="number"
                   id="age"
                   placeholder="e.g. 25"
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  {...register("age")}
+                  className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.age ? "border-red-500" : ""}`}
                   style={{ appearance: "none" }} // Remove default browser styles
-                  required
                 />
+                {errors.age && (
+                  <p className="text-red-500">{errors.age.message}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="gender" className="font-medium text-gray-500">
@@ -86,14 +117,17 @@ export function CalorieCalculator() {
                 </label>
                 <select
                   id="gender"
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  {...register("gender")}
+                  className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.gender ? "border-red-500" : ""}`}
                   style={{ appearance: "none" }} // Remove default browser styles
-                  required
                 >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
+                {errors.gender && (
+                  <p className="text-red-500">{errors.gender.message}</p>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -105,10 +139,13 @@ export function CalorieCalculator() {
                   type="number"
                   id="weight"
                   placeholder="e.g. 70"
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  {...register("weight")}
+                  className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.weight ? "border-red-500" : ""}`}
                   style={{ appearance: "none" }} // Remove default browser styles
-                  required
                 />
+                {errors.weight && (
+                  <p className="text-red-500">{errors.weight.message}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="height" className="font-medium text-gray-500">
@@ -118,10 +155,13 @@ export function CalorieCalculator() {
                   type="number"
                   id="height"
                   placeholder="e.g. 175"
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  {...register("height")}
+                  className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.height ? "border-red-500" : ""}`}
                   style={{ appearance: "none" }} // Remove default browser styles
-                  required
                 />
+                {errors.height && (
+                  <p className="text-red-500">{errors.height.message}</p>
+                )}
               </div>
             </div>
             <div className="flex justify-center">
@@ -136,7 +176,6 @@ export function CalorieCalculator() {
         </div>
 
         {/* Results Section with Animation */}
-        {/* Results Section with Animation */}
         {showResults && results && (
           <div
             className={`transform pt-16 text-center transition-opacity duration-500 ${
@@ -145,7 +184,7 @@ export function CalorieCalculator() {
                 : "translate-y-4 opacity-0"
             }`}
           >
-            <h3 className="text-4xl font-bold">
+            <h3 className="text-4xl font-bold text-white">
               Kebutuhan kalori harian kamu adalah{" "}
               <span className="bg-white px-5 py-1 text-accent-red">
                 {results.calorieNeeds} kkal/hari.{" "}
@@ -159,7 +198,7 @@ export function CalorieCalculator() {
                 IMT kamu {results.bmi} yang menunjukkan kamu termasuk{" "}
                 <span className="font-bold">{results.bmiCategory}</span>. Saat
                 ini, berat badan kamu masih belum ideal. Berat badan idealmu
-                adalah {results.idealWeight} kg.{" "}
+                adalah {results.idealWeight.toFixed(1)} kg.{" "}
                 <span className="font-bold">
                   kamu membutuhkan {results.calorieNeeds} kkal/hari.{" "}
                 </span>

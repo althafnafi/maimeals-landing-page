@@ -41,7 +41,7 @@ export function UspSection() {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="relative h-64 w-full overflow-hidden rounded-lg shadow-lg"
+              className="relative h-48 w-full overflow-hidden rounded-lg shadow-lg md:h-96 lg:h-64"
             >
               <Image
                 src={card.image}
@@ -52,7 +52,7 @@ export function UspSection() {
               />
               <div className="absolute inset-0 bg-black opacity-55"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white">
-                <h3 className="text-3xl font-bold">{card.title}</h3>
+                <h3 className="px-2 text-3xl font-bold">{card.title}</h3>
                 <p className="text-md">{card.description}</p>
               </div>
             </div>
