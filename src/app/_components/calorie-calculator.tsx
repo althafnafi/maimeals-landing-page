@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Cookies from "js-cookie";
+import Link from "next/link";
 
 // Define the validation schema using Zod
-export const CalculatorSchema = z.object({
+export const UserDetails = z.object({
   age: z.coerce
     .number()
     .min(1, "Age must be a positive number")
@@ -15,11 +17,28 @@ export const CalculatorSchema = z.object({
   gender: z.enum(["male", "female"], {
     errorMap: () => ({ message: "Gender is required" }),
   }),
+  activity_level: z.enum(
+    [
+      "sedentary",
+      "lightly_active",
+      "moderately_active",
+      "active",
+      "very_active",
+    ],
+    {
+      errorMap: () => ({ message: "Activity level is required" }),
+    },
+  ),
+  target: z.enum(["maintain", "gain", "loss"], {
+    errorMap: () => ({ message: "Target is required" }),
+  }),
 });
 
-export type CalculatorSchemaType = z.infer<typeof CalculatorSchema>;
+export type UserDetailsType = z.infer<typeof UserDetails>;
 
 export function CalorieCalculator() {
+  const [userDetails, setUserDetails] = useState<UserDetailsType | null>(null);
+
   const [results, setResults] = useState<{
     bmi: number;
     calorieNeeds: number;
@@ -33,13 +52,12 @@ export function CalorieCalculator() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CalculatorSchemaType>({
-    resolver: zodResolver(CalculatorSchema),
+  } = useForm<UserDetailsType>({
+    resolver: zodResolver(UserDetails),
   });
+  const onSubmit: SubmitHandler<UserDetailsType> = (data) => {
+    const { age, weight, height, gender, activity_level, target } = data;
 
-  const onSubmit: SubmitHandler<CalculatorSchemaType> = (data) => {
-    const { age, weight, height, gender } = data;
-    console.log(age, weight, height, gender);
     // Simple BMI calculation
     const heightInMeters = height / 100;
     const bmi = weight / (heightInMeters * heightInMeters);
@@ -51,7 +69,31 @@ export function CalorieCalculator() {
     } else {
       bmr = 10 * weight + 6.25 * height - 5 * age - 161;
     }
-    const calorieNeeds = bmr * 1.2; // Assuming sedentary activity level
+
+    // Activity level multipliers
+    const mult = {
+      sedentary: 1.2,
+      lightly_active: 1.375,
+      moderately_active: 1.55,
+      active: 1.725,
+      very_active: 1.9,
+    };
+
+    // Calculate calorie needs based on activity level
+    let calorieNeeds = bmr * (mult[activity_level] ?? 1.2); // Default to sedentary if not found
+
+    // Adjust calorie needs based on target
+    switch (target) {
+      case "loss":
+        calorieNeeds = calorieNeeds - 500; // Subtract 500 calories for weight loss
+        break;
+      case "gain":
+        calorieNeeds = calorieNeeds + 500; // Add 500 calories for weight gain
+        break;
+      case "maintain":
+      default:
+        break;
+    }
 
     // Calculate ideal weight (using BMI of 22 as the target for healthy weight)
     const idealBMI = 22;
@@ -68,8 +110,8 @@ export function CalorieCalculator() {
     }
 
     // Set results
+    setUserDetails(data);
     setResults({ bmi, calorieNeeds, idealWeight, bmiCategory });
-    console.log(bmi, calorieNeeds, idealWeight, bmiCategory);
     setShowResults(true);
   };
 
@@ -158,6 +200,53 @@ export function CalorieCalculator() {
                 )}
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="activity_level"
+                  className="font-medium text-gray-500"
+                >
+                  Activity Levels
+                </label>
+                <select
+                  id="activity_level"
+                  {...register("activity_level")}
+                  className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.activity_level ? "border-red-500" : ""}`}
+                  style={{ appearance: "none" }} // Remove default browser styles
+                >
+                  <option value="">Activity Level</option>
+                  <option value="sedentary">Sedentary</option>
+                  <option value="lightly_active">Lightly active</option>
+                  <option value="moderately_active">Moderately active</option>
+                  <option value="active">Active</option>
+                  <option value="very_active">Very active</option>
+                </select>
+                {errors.activity_level && (
+                  <p className="text-red-500">
+                    {errors.activity_level.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label htmlFor="target" className="font-medium text-gray-500">
+                  Target
+                </label>
+                <select
+                  id="target"
+                  {...register("target")}
+                  className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.target ? "border-red-500" : ""}`}
+                  style={{ appearance: "none" }} // Remove default browser styles
+                >
+                  <option value="">Target</option>
+                  <option value="maintain">Maintain Weight</option>
+                  <option value="gain">Weight Gain</option>
+                  <option value="loss">Weight Loss</option>
+                </select>
+                {errors.target && (
+                  <p className="text-red-500">{errors.target.message}</p>
+                )}
+              </div>
+            </div>
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -200,13 +289,18 @@ export function CalorieCalculator() {
                 </span>
               </p>
             </div>
-            <span className="bg-white font-bold text-accent-red">
-              Chat dengan bot
-            </span>
             <p className="mt-4 text-lg text-gray-100 underline">
               Bingung mau makan apa? maimeals.com akan merekomendasikan meal
               plan yang dapat langsung kamu order.
             </p>
+            <Link
+              className="mt-12"
+              href={`/chat/${Cookies.get("sessionId") ?? ""}`}
+            >
+              <span className="bg-white px-4 text-3xl font-bold text-accent-red">
+                Chat dengan bot sekarang
+              </span>
+            </Link>
           </div>
         )}
       </div>
