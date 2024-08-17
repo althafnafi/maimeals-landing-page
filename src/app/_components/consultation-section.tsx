@@ -1,17 +1,18 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function ConsultationSection() {
   return (
-    <section className="bg-white py-16">
-      <div className="container mx-auto px-4">
+    <section className="bg-white px-2 py-12">
+      <div className="container mx-auto">
         <div className="flex flex-row flex-wrap justify-center gap-2 lg:gap-8">
           {/* Left Column: Image */}
           <div className="flex justify-center">
             <Image
               src="/illust_phone_contact.png"
               alt="Consultation Illustration"
-              width={250} // Adjust width as needed
-              height={200} // Adjust height as needed
+              width={225} // Adjust width as needed
+              height={225} // Adjust height as needed
               className="object-contain"
             />
           </div>
@@ -24,12 +25,13 @@ export function ConsultationSection() {
             </h2>
 
             {/* Second Row: Two Columns */}
-            <div className="flex flex-row justify-center gap-3">
+            <div className="flex flex-row items-center justify-center gap-3">
               {/* Left Column: Black Text */}
-              <div className="text-right text-3xl text-black">
+              <div className="text-right text-2xl text-black lg:text-3xl">
                 <p>
                   <em>
-                    Konsultasi dengan <br /> ahlinya sekarang!
+                    Konsultasi dengan <br />
+                    ahlinya sekarang!
                   </em>
                 </p>
               </div>
@@ -54,12 +56,16 @@ export function ConsultationSection() {
 
             {/* Third Row: Red Text */}
             <div className="flex w-fit flex-col gap-2">
-              <div className="text-bold mt-10 h-fit bg-yellow-400 px-2 py-1 text-center text-2xl font-bold text-accent-red">
-                KONSULTASIKAN SEKARANG
-              </div>
-              <div className="h-fit bg-accent-red px-2 py-1 text-center text-2xl font-bold text-yellow-400">
-                PESAN SEKARANG
-              </div>
+              <Link href={"google.com"}>
+                <div className="text-bold mt-10 h-fit bg-yellow-400 px-2 py-1 text-center text-2xl font-bold text-accent-red hover:bg-yellow-300">
+                  KONSULTASIKAN SEKARANG
+                </div>
+              </Link>
+              <Link href={"google.com"}>
+                <div className="h-fit bg-accent-red px-2 py-1 text-center text-2xl font-bold text-yellow-400 hover:bg-red-800">
+                  PESAN SEKARANG
+                </div>
+              </Link>
             </div>
           </div>
         </div>

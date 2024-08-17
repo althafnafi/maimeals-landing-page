@@ -9,7 +9,7 @@ import { Footer } from "./_components/footer/footer";
 
 export default async function Home() {
   return (
-    <div>
+    <div className="overscroll-none">
       <MainHero />
       <CalorieCalculator />
       <UspSection />

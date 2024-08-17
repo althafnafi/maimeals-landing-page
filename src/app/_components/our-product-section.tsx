@@ -3,7 +3,7 @@ export function OurProductSection() {
     <section id="product" className="bg-accent-red py-16">
       <div className="container mx-auto text-center">
         <h2 className="mb-12 text-5xl font-bold text-white">Our Products</h2>
-        <div className="flex flex-row justify-center gap-x-16">
+        <div className="flex flex-row justify-center gap-x-8 lg:gap-x-16">
           {" "}
           {/* Added gap-x-8 */}
           {/* Left Item */}

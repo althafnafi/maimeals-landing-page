@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function SocialMediaSection() {
   return (
@@ -48,18 +49,22 @@ export function SocialMediaSection() {
             <h3 className="mb-2 text-3xl font-bold text-black">social media</h3>
             <div className="flex flex-wrap justify-center space-x-2">
               {/* Three Elements: mAIMeals Logo SVG */}
-              <Image
-                src="logo_ig_trans.svg"
-                alt="Instagram Logo"
-                width={40} // Adjust width as needed
-                height={40} // Adjust height as needed
-              />
-              <Image
-                src="/logo_x_trans.svg"
-                alt="Twitter/X Logo"
-                width={40} // Adjust width as needed
-                height={40} // Adjust height as needed
-              />
+              <Link href={"https://www.instagram.com/maimeals.id/"}>
+                <Image
+                  src="logo_ig_trans.svg"
+                  alt="Instagram Logo"
+                  width={40} // Adjust width as needed
+                  height={40} // Adjust height as needed
+                />
+              </Link>
+              <Link href="https://x.com/mAImeals_id">
+                <Image
+                  src="/logo_x_trans.svg"
+                  alt="Twitter/X Logo"
+                  width={40} // Adjust width as needed
+                  height={40} // Adjust height as needed
+                />
+              </Link>
               <Image
                 src="logo_wa_black_trans.svg"
                 alt="WhatsApp Logo"

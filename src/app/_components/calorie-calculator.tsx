@@ -189,12 +189,14 @@ export function CalorieCalculator() {
               style={{ width: "70vw", maxWidth: "600px" }}
             >
               <p className="text-lg font-normal text-black">
-                IMT kamu {results.bmi} yang menunjukkan kamu termasuk{" "}
-                <span className="font-bold">{results.bmiCategory}</span>. Saat
-                ini, berat badan kamu masih belum ideal. Berat badan idealmu
-                adalah {results.idealWeight.toFixed(1)} kg.{" "}
+                IMT kamu {results.bmi.toFixed(1)} yang menunjukkan kamu termasuk{" "}
+                <span className="font-bold">{results.bmiCategory}</span>
+                {!(results.bmi < 24.9 && results.bmi > 17.5) &&
+                  `. Saat ini, berat badan kamu masih belum ideal`}
+                . Berdasarkan kalkulasi, berat badan idealmu adalah{" "}
+                {results.idealWeight.toFixed(1)} kg.{" "}
                 <span className="font-bold">
-                  kamu membutuhkan {results.calorieNeeds} kkal/hari.{" "}
+                  Kamu membutuhkan {results.calorieNeeds} kkal/hari.{" "}
                 </span>
               </p>
             </div>

@@ -23,7 +23,7 @@ export function UspSection() {
   ];
 
   return (
-    <section id="about" className="relative bg-white px-12 pb-32 pt-20">
+    <section id="about" className="relative bg-white px-2 pb-32 pt-20 lg:px-8">
       <div className="container mx-auto text-center">
         <h2 className="pb-4 pt-12 text-5xl font-bold text-accent-red">
           Kenapa mAIMeals?
@@ -41,7 +41,7 @@ export function UspSection() {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="relative h-48 w-full overflow-hidden rounded-lg shadow-lg md:h-96 lg:h-64"
+              className="relative h-64 w-full overflow-hidden rounded-lg shadow-lg md:h-96 lg:h-64"
             >
               <Image
                 src={card.image}
