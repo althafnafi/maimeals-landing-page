@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavigationBar } from "./_components/nav/navigation-bar";
 import { CSPostHogProvider } from "./_analytics/providers";
+import { Analytics } from "@vercel/analytics/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -55,7 +56,10 @@ export default function RootLayout({
             <UserButton />
           </SignedIn> */}
             <NavigationBar />
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+            <TRPCReactProvider>
+              {children}
+              <Analytics />
+            </TRPCReactProvider>
           </ThemeProvider>
         </body>
       </html>
