@@ -16,6 +16,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavigationBar } from "./_components/nav/navigation-bar";
+import { CSPostHogProvider } from "./_analytics/providers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -33,30 +34,32 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     // <ClerkProvider>
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    <CSPostHogProvider>
+      <html lang="en" className={`${GeistSans.variable}`}>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable,
+          )}
         >
-          {/* <SignedOut>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn> */}
-          <NavigationBar />
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+            <NavigationBar />
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </CSPostHogProvider>
     // </ClerkProvider>
   );
 }

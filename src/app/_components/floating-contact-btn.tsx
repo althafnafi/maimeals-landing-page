@@ -1,11 +1,26 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+// import { cookies } from "next/headers";
+import { usePostHog } from "posthog-js/react";
+import Cookies from "js-cookie";
 
 export function FloatingContactBtn() {
+  const posthog = usePostHog(); // Retrieve the PostHog instance
+
+  const handleClick = () => {
+    const sessionId = Cookies.get("sessionId"); // Retrieve sessionId from cookies
+
+    console.log("sessionId", sessionId);
+    posthog.capture("whatsapp", { sessionId }); // Send the event with the sessionId
+  };
+
   return (
     <Link
       className="fixed bottom-5 right-5 z-50 flex items-center"
       href="/#contact"
+      onClick={handleClick} // Add the onClick handler here
     >
       <div className="relative">
         <button className="rounded-full border-2 border-white bg-green-700 px-4 text-lg font-bold text-white hover:bg-green-600">
