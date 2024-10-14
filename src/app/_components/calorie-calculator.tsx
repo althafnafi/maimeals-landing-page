@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
@@ -55,6 +55,7 @@ export function CalorieCalculator() {
   } = useForm<UserDetailsType>({
     resolver: zodResolver(UserDetails),
   });
+
   const onSubmit: SubmitHandler<UserDetailsType> = (data) => {
     const { age, weight, height, gender, activity_level, target } = data;
 

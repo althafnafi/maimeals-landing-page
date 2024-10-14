@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ConsultationSvg } from "@/components/svg/svg-consultation";
 import { CateringSvg } from "@/components/svg/svg-catering";
 

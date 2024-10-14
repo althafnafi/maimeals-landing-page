@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import Cookies from "js-cookie"; // Import js-cookie
 import { cookies } from "next/headers";
 
 export function NavigationBar() {

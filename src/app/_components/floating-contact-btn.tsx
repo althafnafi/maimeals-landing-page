@@ -18,7 +18,7 @@ export function FloatingContactBtn() {
   return (
     <Link
       className="fixed bottom-5 right-5 z-50 flex items-center"
-      href="/#contact"
+      href={"https://wa.me/6285141739229"}
       onClick={handleClick} // Add the onClick handler here
     >
       <div className="relative">
