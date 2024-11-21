@@ -296,7 +296,8 @@ export function CalorieCalculator() {
             </p>
             <Link
               className="mt-12"
-              href={`/chat/${Cookies.get("sessionId") ?? ""}`}
+              // href={`/chat/${Cookies.get("sessionId") ?? ""}`}
+              href={"http://145.223.117.210:7900/"}
             >
               <span className="bg-white px-4 text-3xl font-bold text-accent-red">
                 Chat dengan bot sekarang
