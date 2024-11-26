@@ -7,14 +7,15 @@ export function NavigationBar() {
     { href: "/#about", text: "ABOUT" },
     { href: "/#product", text: "PRODUCT" },
     { href: "/#contact", text: "CONTACT US" },
-    { href: "http://145.223.117.210:7900/", text: "CHAT" },
+    { href: "/chat", text: "CHAT" },
   ];
 
   return (
     <nav className="fixed top-0 z-50 flex h-16 w-full items-center justify-between bg-white shadow-md">
       {/* Mobile Chat Link */}
       <div className="flex items-center bg-accent-red px-4 py-3 text-sm font-bold text-white hover:bg-red-700 md:hidden">
-        <Link href="http://145.223.117.210:7900/">CHAT WITH BOT</Link>
+        {/* <Link href="http://145.223.117.210:7900/">CHAT WITH BOT</Link> */}
+        <Link href="/chat"> CHAT WITH BOT </Link>
       </div>
 
       {/* Logo */}
