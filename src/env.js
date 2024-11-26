@@ -12,6 +12,11 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     CLERK_SECRET_KEY: z.string(),
+    DB_HOST: z.string(),
+    DB_PORT: z.string(),
+    DB_USER: z.string(),
+    DB_PASSWORD: z.string(),
+    DB_DATABASE: z.string(),
   },
 
   /**
@@ -31,6 +36,11 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    DB_HOST: process.env.DB_HOST,
+    DB_PORT: process.env.DB_PORT,
+    DB_USER: process.env.DB_USER,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_DATABASE: process.env.DB_DATABASE,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
