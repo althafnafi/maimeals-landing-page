@@ -29,7 +29,7 @@ export function ChatNavigationBar() {
               href: "https://maimeals.id/#contact",
               text: "CONTACT US",
             },
-            { href: "http://145.223.117.210:7900/", text: "CHAT" },
+            { href: "http://168.231.119.233:7900/", text: "CHAT" },
           ].map((link, index) => (
             <Link
               key={link.text}

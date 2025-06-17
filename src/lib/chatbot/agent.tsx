@@ -15,7 +15,7 @@ import {
   type MenuProps,
 } from "@/app/chat/_components/prebuilt/menu";
 
-const API_URL = "http://145.223.117.210:7800/chat";
+const API_URL = "http://168.231.119.233:7800/chat";
 
 type ToolComponent = {
   loading: (props?: any) => JSX.Element;
