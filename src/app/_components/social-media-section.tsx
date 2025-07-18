@@ -66,7 +66,7 @@ export function SocialMediaSection() {
                   height={40} // Adjust height as needed
                 />
               </Link>
-              <Link href={"https://wa.me/6285141739229"}>
+              <Link href={"https://wa.me/6285811524164"}>
                 <Image
                   src="logo_wa_black_trans.svg"
                   alt="WhatsApp Logo"

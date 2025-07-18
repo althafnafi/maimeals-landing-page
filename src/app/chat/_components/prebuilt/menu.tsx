@@ -51,7 +51,7 @@ export function Menu(props: MenuProps): JSX.Element {
         </p>
       </div>
       <Link
-        href={"https://wa.me/6285141739229"}
+        href={"https://wa.me/6285811524164"}
         className="mt-4 flex items-center justify-center space-x-2 rounded-md bg-white p-2 font-bold text-green-900 hover:bg-green-900 hover:text-white"
       >
         <Image

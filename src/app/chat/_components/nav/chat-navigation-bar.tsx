@@ -45,7 +45,7 @@ export function ChatNavigationBar() {
 
       {/* Order Now button on the right */}
       <div className="flex items-center bg-accent-red px-8 text-xl font-bold text-white hover:bg-red-700">
-        <Link href="https://wa.me/6285141739229">ORDER NOW!</Link>
+        <Link href="https://wa.me/6285811524164">ORDER NOW!</Link>
       </div>
     </nav>
   );
