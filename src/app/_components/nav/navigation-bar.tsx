@@ -51,7 +51,7 @@ export function NavigationBar() {
 
       {/* Order Now button */}
       <div className="flex items-center bg-accent-red px-4 py-3 text-sm font-bold text-white hover:bg-red-700 md:px-8 md:text-xl">
-        <Link href="/#">ORDER NOW!</Link>
+        <Link href="https://wa.me/6285141739229">ORDER NOW!</Link>
       </div>
     </nav>
   );

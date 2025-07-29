@@ -62,7 +62,7 @@ export function ConsultationSection() {
                   KONSULTASIKAN SEKARANG
                 </div>
               </Link>
-              <Link href={"/#"}>
+              <Link href={"https://wa.me/6285141739229"}>
                 <div className="h-fit bg-accent-red px-2 py-1 text-center text-2xl font-bold text-yellow-400 hover:bg-red-800">
                   PESAN SEKARANG
                 </div>

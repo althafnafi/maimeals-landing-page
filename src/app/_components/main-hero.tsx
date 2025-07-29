@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function MainHero() {
   return (
@@ -24,9 +25,11 @@ export function MainHero() {
           Kami percaya, setiap gigitan yang bergizi adalah investasi kesehatan
           dan kebahagiaanmu.
         </p>
-        <button className="rounded-[30px] bg-white px-6 py-2 text-xl font-bold text-accent-red transition duration-300 hover:bg-red-600 hover:text-white md:text-2xl">
-          Pesan Sekarang
-        </button>
+        <Link href="https://wa.me/6285141739229">
+          <button className="rounded-[30px] bg-white px-6 py-2 text-xl font-bold text-accent-red transition duration-300 hover:bg-red-600 hover:text-white md:text-2xl">
+            Pesan Sekarang
+          </button>
+        </Link>
       </div>
       <div className="custom-shape-divider-bottom-1723843172 z-40">
         <svg
